@@ -5,8 +5,11 @@
 
 
 [![](https://jitpack.io/v/puyang1017/Networkwight.svg)](https://jitpack.io/#puyang1017/Networkwight)
+
 To get a Git project into your build:
+
 ##Step 1.
+
 ###Add the JitPack repository to your build file
 ```
 allprojects {
