@@ -1,7 +1,7 @@
 ﻿﻿# Networkwight
 
 
-!(﻿/Users/puyang/develop/NetworkwighGit/app/image/Screenshot_20181223_132135_com.puy.networkwight.jpg "展示")
+!(https://raw.githubusercontent.com/puyang1017/Networkwight/master/image/Screenshot_20181223_132135_com.puy.networkwight.jpg "展示")
 
 
 [![](https://jitpack.io/v/puyang1017/Networkwight.svg)](https://jitpack.io/#puyang1017/Networkwight)
