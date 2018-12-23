@@ -8,9 +8,9 @@
 
 To get a Git project into your build:
 
-##Step 1.
+## Step 1.
 
-###Add the JitPack repository to your build file
+### Add the JitPack repository to your build file
 ```
 allprojects {
 		repositories {
@@ -20,15 +20,16 @@ allprojects {
 	}
 ```
 
-##Step 2.
-###Add the dependency
+## Step 2.
+### Add the dependency
 ```
 dependencies {
 	implementation 'com.github.puyang1017:Networkwight:v1.0.1'
 }
 ```
-##Step 3.
-###Usage
+## Step 3.
+
+### Usage
 ```
 <com.puy.networklibrary.NetworkDelayDisplay
         android:id="@+id/network_delay_display"
@@ -85,7 +86,7 @@ NetworkDelayDisplay.setPs_to_ljb_delay(190, false)    //ps到联机宝延迟
         })
         .start();
 ```
-method
+## method
 ```
 networkDelayDisplay.resetData() //重置数据   需要刷新全部数据时需要先调用此方法
 
