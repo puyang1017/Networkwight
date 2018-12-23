@@ -21,13 +21,22 @@ allprojects {
 ###Add the dependency
 ```
 dependencies {
-	implementation 'com.github.puyang1017:Networkwight:1.0.1'
+	implementation 'com.github.puyang1017:Networkwight:v1.0.1'
 }
 ```
 ##Step 3.
 ###Usage
 ```
-networkDelayDisplay.setPs_to_ljb_delay(190, false)    //ps到联机宝延迟
+<com.puy.networklibrary.NetworkDelayDisplay
+        android:id="@+id/network_delay_display"
+        android:layout_centerHorizontal="true"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="#F9F9F9"
+        />
+
+
+NetworkDelayDisplay.setPs_to_ljb_delay(190, false)    //ps到联机宝延迟
         .setXbox_to_ljb_delay(40, true)               //xbox到联机宝延迟
         .setLjb_to_router_delay(170, false)           //联机宝到路由器延迟
         .setRouter_to_node_delay(45,false)            //路由器到节点延迟
