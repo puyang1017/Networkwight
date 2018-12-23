@@ -6,7 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import widget.NetworkDelayDisplay;
+import com.puy.networklibrary.NetworkDelayDisplay;
+
 
 public class MainActivity extends AppCompatActivity {
     private NetworkDelayDisplay networkDelayDisplay;

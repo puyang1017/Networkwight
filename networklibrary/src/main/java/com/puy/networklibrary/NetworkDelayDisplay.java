@@ -1,4 +1,4 @@
-package widget;
+package com.puy.networklibrary;
 
 
 import android.content.Context;
@@ -9,13 +9,10 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.puy.networkwight.R;
 
 import static android.view.Gravity.CENTER;
 

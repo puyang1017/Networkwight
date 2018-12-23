@@ -7,7 +7,7 @@
     android:background="@android:color/black"
     tools:context=".MainActivity">
 
-    <widget.NetworkDelayDisplay
+    <com.puy.networklibrary.NetworkDelayDisplay
         android:id="@+id/network_delay_display"
         android:layout_centerHorizontal="true"
         android:layout_width="300dp"
