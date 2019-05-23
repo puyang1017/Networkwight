@@ -21,14 +21,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         network_delay_monitor = findViewById(R.id.network_delay_monitor);
-        network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps1", "192.168.1.1");
+        network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps1", "192.168.1.1",2);
         add_button = findViewById(R.id.add_button);
         delete_button = findViewById(R.id.delete_button);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                network_delay_monitor.addDevice(R.drawable.icon_xbox_focused, "ps2", "192.168.1.2");
-                network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps3", "192.168.1.3");
+                network_delay_monitor.addDevice(R.drawable.icon_xbox_focused, "ps2", "192.168.1.2",12);
+                network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps3", "192.168.1.3",22);
             }
         });
         delete_button.setOnClickListener(new View.OnClickListener() {

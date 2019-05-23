@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -45,12 +46,14 @@ public class NetworkDelayMonitor extends RelativeLayout {
     private LinearLayout center_ll = new LinearLayout(getContext());
     private ArrayList<NetDevice> netDevices = new ArrayList<>();
     private int imgHeight_base;
+    private int imgWidth_base;
     private int imgHeight_node;
     private int imgWidth_node;
     private int padding;
     private ImageView image_ljb;
     private ImageView image_router;
     private ImageView image_node;
+    private LinearLayout linearLayout;
 
     public NetworkDelayMonitor(Context context) {
         super(context);
@@ -70,6 +73,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
 
     private void init(Context context) {
         imgHeight_base = dp2px(32, context);
+        imgWidth_base = imgHeight_base;
         imgHeight_node = imgHeight_base;
         imgWidth_node = dp2px(60, context);
         //内边距
@@ -132,6 +136,8 @@ public class NetworkDelayMonitor extends RelativeLayout {
         RelativeLayout.LayoutParams layoutParams_center = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams_center.addRule(RelativeLayout.BELOW, R.id.NetworkDelayMonitor_devices_ll);
 
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imgWidth_base, imgHeight_base);
         //联机宝图标
         LinearLayout linearLayout_ljb = new LinearLayout(getContext());
         linearLayout_ljb.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
@@ -140,6 +146,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         image_ljb.setImageResource(R.drawable.icon_lianjibao);
         image_ljb.setBackgroundResource(R.drawable.network_background);
         image_ljb.setPadding(padding, padding, padding, padding);
+        image_ljb.setLayoutParams(params);
         linearLayout_ljb.setGravity(Gravity.CENTER);
         linearLayout_ljb.addView(image_ljb);
         //路由图标
@@ -150,6 +157,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         image_router.setImageResource(R.drawable.icon_router);
         image_router.setBackgroundResource(R.drawable.network_background);
         image_router.setPadding(padding, padding, padding, padding);
+        image_router.setLayoutParams(params);
         linearLayout_router.setGravity(Gravity.CENTER);
         linearLayout_router.addView(image_router);
 
@@ -158,6 +166,8 @@ public class NetworkDelayMonitor extends RelativeLayout {
         linearLayout_node.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         ((LinearLayout.LayoutParams) linearLayout_node.getLayoutParams()).topMargin = dp2px(40f, getContext());
         image_node = new ImageView(getContext());
+        LinearLayout.LayoutParams params_node = new LinearLayout.LayoutParams(imgWidth_node, imgHeight_node);
+        image_node.setLayoutParams(params_node);
         image_node.setImageResource(R.drawable.icon_node);
         image_node.setBackgroundResource(R.drawable.network_background);
         image_node.setPadding(padding, padding, padding, padding);
@@ -174,7 +184,48 @@ public class NetworkDelayMonitor extends RelativeLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        int[] local_ljb = getLocation(image_node);
+        for (final NetDevice netDevice : netDevices) {
+
+            int[] local_device = getLocation(netDevice.getImageView());
+            int x = local_device[0];
+            int y = local_device[1];
+            System.out.println("netDevice1 " + x + " "+y);
+            System.out.println("netDevice2 " + netDevice.getImageView().getX() + " "+netDevice.getImageView().getY());
+            Path path = new Path();
+            path.moveTo(x , y );
+            path.lineTo(x+ imgHeight_base / 2, y+ imgHeight_base + dp2px(20, getContext()));
+            path.lineTo(local_ljb[0]+ imgHeight_base / netDevices.size(), y + imgHeight_base + dp2px(20, getContext()));
+            path.lineTo(local_ljb[0] + imgHeight_base / netDevices.size(), local_ljb[1]);
+            if (netDevice.getDelay() == 0) {
+                setMyLineColor(canvas, path, netDevice.getDelay(), true);
+            } else {
+                setMyLineColor(canvas, path, netDevice.getDelay(), false);
+            }
+        }
+        System.out.println("image_ljb1 " + " " +image_node.getX() + " "+image_node.getY());
+        System.out.println("image_ljb2 " + " " +local_ljb[0] + " "+local_ljb[1]);
+
+
         super.onDraw(canvas);
+    }
+
+    public void setMyLineColor(Canvas canvas, Path path, int delay, boolean lost) {
+        if (lost) {
+            canvas.drawPath(path, red_lost_paint);
+        } else {
+            if (delay > 0 && delay < 100) {
+                canvas.drawPath(path, green_paint);
+            } else if (delay >= 100 && delay < 150) {
+                canvas.drawPath(path, blue_paint);
+            } else if (delay >= 150 && delay < 200) {
+                canvas.drawPath(path, yellow_paint);
+            } else if (delay >= 200 && delay < 300) {
+                canvas.drawPath(path, orange_paint);
+            } else if (delay >= 300) {
+                canvas.drawPath(path, red_paint);
+            }
+        }
     }
 
     public int dp2px(float dp, Context mContext) {
@@ -189,27 +240,54 @@ public class NetworkDelayMonitor extends RelativeLayout {
      * @param name  设备名称
      * @param ip    设备ip
      */
-    public void addDevice(@DrawableRes int resId, final String name, final String ip) {
+    public void addDevice(@DrawableRes int resId, final String name, final String ip, final int delay) {
         LinearLayout linearLayout = new LinearLayout(getContext());
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        ImageView device = new ImageView(getContext());
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        linearLayout.setGravity(Gravity.CENTER);
+        final ImageView device = new ImageView(getContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imgWidth_base, imgHeight_base);
+        device.setLayoutParams(params);
         device.setImageResource(resId);
         device.setBackgroundResource(R.drawable.network_background);
         device.setPadding(padding, padding, padding, padding);
-        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         linearLayout.addView(device);
-        linearLayout.setGravity(Gravity.CENTER);
         devices_ll.addView(linearLayout);
-        netDevices.add(new NetDevice(ip, name, linearLayout));
+        netDevices.add(new NetDevice(ip, name, delay, linearLayout, device));
         device.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), name + " " + ip, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), v.getX() + " " + v.getY(), Toast.LENGTH_SHORT).show();
+                DevicePopup devicePopup = new DevicePopup(getContext());
+                devicePopup.setText(name, "IP:" + ip);
+                devicePopup.setBackgroundColor(Color.TRANSPARENT);
+                devicePopup.setPopupGravity(Gravity.CENTER_HORIZONTAL);
+                devicePopup.setOffsetY(dp2px(4, getContext()));
+                devicePopup.showPopupWindow(v);
             }
         });
+
     }
+
+    public int[] getLocation(View v) {
+        int[] loc = new int[4];
+        int[] location = new int[2];
+        v.getLocationInWindow(location);
+//        loc[0] = location[0];
+//        loc[1] = location[1];
+//        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//        v.measure(w, h);
+//
+//        loc[2] = v.getMeasuredWidth();
+//        loc[3] = v.getMeasuredHeight();
+
+        //base = computeWH();
+        return location;
+    }
+
 
     /**
      * 移除设备
@@ -222,6 +300,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
                 devices_ll.removeView(netDevice.getLinearLayout());
             }
         }
+
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.puy.networklibrary;
 
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 /**
@@ -8,14 +9,18 @@ import android.widget.LinearLayout;
  */
 public class NetDevice {
 
-    String ip;
-    String name;
-    LinearLayout linearLayout;
+    private String ip;
+    private String name;
+    private int delay;
+    private LinearLayout linearLayout;
+    private ImageView imageView;
 
-    public NetDevice(String ip, String name, LinearLayout linearLayout) {
+    public NetDevice(String ip, String name, int delay, LinearLayout linearLayout, ImageView imageView) {
         this.ip = ip;
         this.name = name;
+        this.delay = delay;
         this.linearLayout = linearLayout;
+        this.imageView = imageView;
     }
 
     public String getName() {
@@ -40,5 +45,21 @@ public class NetDevice {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 }
