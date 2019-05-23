@@ -13,14 +13,35 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:background="#F9F9F9"
+        android:visibility="gone"
         />
 
+    <com.puy.networklibrary.NetworkDelayMonitor
+        android:id="@+id/network_delay_monitor"
+        android:layout_centerHorizontal="true"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="#F9F9F9"
+        />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/add_button"
         android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="切换状态"/>
+        android:text="add_button"/>
 
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="delete_button"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
 </RelativeLayout>
