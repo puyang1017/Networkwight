@@ -1,5 +1,6 @@
 package com.puy.networklibrary;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -9,11 +10,13 @@ public class NetNode {
     private String name;
     private int delay;
     private TextView node;
+    private LinearLayout linearLayout;
 
-    public NetNode(String name, int delay, TextView node) {
+    public NetNode(String name, int delay, TextView node,LinearLayout linearLayout) {
         this.name = name;
         this.delay = delay;
         this.node = node;
+        this.linearLayout = linearLayout;
     }
 
     public String getName() {
@@ -38,5 +41,13 @@ public class NetNode {
 
     public void setNode(TextView node) {
         this.node = node;
+    }
+
+    public LinearLayout getLinearLayout() {
+        return linearLayout;
+    }
+
+    public void setLinearLayout(LinearLayout linearLayout) {
+        this.linearLayout = linearLayout;
     }
 }
