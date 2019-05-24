@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="NetworkDelayMonitor_devices_ll" type="id" />
+    <item name="NetworkDelayMonitor_center_ll" type="id" />
 </resources>
