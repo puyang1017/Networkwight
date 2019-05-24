@@ -1,17 +1,15 @@
 package com.puy.networkwight;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.puy.networklibrary.NetworkDelayDisplay;
 import com.puy.networklibrary.NetworkDelayMonitor;
 
 
 public class MainActivity extends AppCompatActivity {
-    private NetworkDelayDisplay networkDelayDisplay;
     private Button add_button;
     private Button delete_button;
     private NetworkDelayMonitor network_delay_monitor;
