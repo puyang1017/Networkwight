@@ -24,85 +24,45 @@ allprojects {
 ### Add the dependency
 ```
 dependencies {
-	implementation 'com.github.puyang1017:Networkwight:v1.0.1'
+	implementation 'com.github.puyang1017:Networkwight:v1.1.0'
 }
 ```
 ## Step 3.
 
 ### Usage
 ```
-<com.puy.networklibrary.NetworkDelayDisplay
-        android:id="@+id/network_delay_display"
+<com.puy.networklibrary.NetworkDelayMonitor
+        android:id="@+id/network_delay_monitor"
         android:layout_centerHorizontal="true"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#F9F9F9"
         />
 
 
-NetworkDelayDisplay.setPs_to_ljb_delay(190, false)    //ps到联机宝延迟
-        .setXbox_to_ljb_delay(40, true)               //xbox到联机宝延迟
-        .setLjb_to_router_delay(170, false)           //联机宝到路由器延迟
-        .setRouter_to_node_delay(45,false)            //路由器到节点延迟
-        .add_node_to_country(67,true,"韩")            //添加节点到游戏延迟
-        .add_node_to_country(100,true,"美")
-        .add_node_to_country(500,true,"美")
-        .add_node_to_country(50,false,"欧")
-        .add_node_to_country(190,true,"美")
-        .add_node_to_country(190,false,"亚")
-        .add_node_to_country(90,true,"美")
-        .add_node_to_country(210,false,"亚")
-        .add_node_to_country(90,false,"美")
-        .add_node_to_country(110,false,"亚")
-        .setPsOnClickListener(new View.OnClickListener() { //图标点击监听事件
-            @Override
-            public void onClick(View v) {
-
-            }
-        })
-        .setXboxOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        })
-        .setLjbOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        })
-        .setRouterOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        })
-        .setNodeOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        })
-        .start();
+        network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps1", "192.168.1.1",2);
+        network_delay_monitor.addNode("中",2);
+        network_delay_monitor.addNode("美",2);
+        network_delay_monitor.addNode("日",2);
+        network_delay_monitor.addNode("韩",2);
+        network_delay_monitor.refreshLjbDelay(3);
+        network_delay_monitor.refreshRouterDelay(4);
 ```
 ## method
 ```
-networkDelayDisplay.resetData() //重置数据   需要刷新全部数据时需要先调用此方法
+network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps1", "192.168.1.1",2); //添加设备 参数1->图片资源 参数2->名称 参数3->地址 参数4->延迟
 
-networkDelayDisplay.start(); //启动    设置完数据或重置数据后需调用此方法才生效
+network_delay_monitor.addNode("中",2); //添加节点 参数1->名称 参数2->延迟
 
-networkDelayDisplay.setPs_to_ljb_delay(190, false)               //ps到联机宝延迟
+network_delay_monitor.refreshLjbDelay(3);    //联机宝延迟
 
-networkDelayDisplay.setXbox_to_ljb_delay(40, true)               //xbox到联机宝延迟
+network_delay_monitor.refreshRouterDelay(4);   //路由器延迟
 
-networkDelayDisplay.setLjb_to_router_delay(170, false)           //联机宝到路由器延迟
+network_delay_monitor.refreshDeviceAndNodeDelay("中",200);       //刷新指定设备和节点的延迟
 
-networkDelayDisplay.setRouter_to_node_delay(45,false)            //路由器到节点延迟
+network_delay_monitor.removeDevice("ps3");          //删除指定设备
 
-networkDelayDisplay.add_node_to_country(67,true,"韩")            //添加节点到游戏延迟  最多添加10个数据
-
-networkDelayDisplay.set_node_to_country_1(34,false,"亚")         //可以单独针节点到游戏的延迟单独设置
+network_delay_monitor.removeNode("中");            //删除指定节点
 
 ```
 
