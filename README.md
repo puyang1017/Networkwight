@@ -24,7 +24,7 @@ allprojects {
 ### Add the dependency
 ```
 dependencies {
-	implementation 'com.github.puyang1017:Networkwight:v1.1.0'
+	implementation 'com.github.puyang1017:Networkwight:v1.1.2'
 }
 ```
 ## Step 3.
