@@ -36,7 +36,8 @@ public class NetworkDelayMonitor extends RelativeLayout {
     private int green = Color.parseColor("#00B374");
     private int orange = Color.parseColor("#F18E2D");
     private int black = Color.parseColor("#3A3848");
-    private int text_background = Color.parseColor("#F9F9F9");
+    private int bg_line_color = Color.parseColor("#E6E6E7");
+    private int bg_text_color = Color.parseColor("#ACAFB8");
 
     private Paint blue_paint;
     private Paint red_paint;
@@ -45,6 +46,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
     private Paint orange_paint;
     private Paint black_paint;
     private Paint red_lost_paint;
+    private Paint bg_line_paint;
     private int line_width;
 
     private LinearLayout devices_ll = new LinearLayout(getContext());
@@ -69,6 +71,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
     private int mY;
     private int line_hight;
     private int textSize = dp2px(7, getContext());
+    private int bg_textSize = dp2px(10, getContext());
 
     //联机宝延迟
     private int ljbDelay = -1;
@@ -144,6 +147,13 @@ public class NetworkDelayMonitor extends RelativeLayout {
         red_lost_paint.setStrokeWidth(line_width);
         red_lost_paint.setColor(red);
         red_lost_paint.setPathEffect(new DashPathEffect(new float[]{dp2px(3, context), dp2px(2, context)}, 0));
+
+        bg_line_paint = new Paint();
+        bg_line_paint.setAntiAlias(true);
+        bg_line_paint.setStyle(Paint.Style.STROKE);
+        bg_line_paint.setStrokeWidth(line_width);
+        bg_line_paint.setColor(bg_line_color);
+        bg_line_paint.setPathEffect(new DashPathEffect(new float[]{dp2px(3, context), dp2px(2, context)}, 0));
 
         devices_ll.setOrientation(LinearLayout.HORIZONTAL);
         devices_ll.setId(R.id.NetworkDelayMonitor_devices_ll);
@@ -268,6 +278,48 @@ public class NetworkDelayMonitor extends RelativeLayout {
         int index = netDevices.size() / 2;
         int line_h = imgHeight_base / (netDevices.size() + 1);
         line_hight = 0;
+        //绘制背景虚线和文字
+        int padding_left = dp2px(10, getContext());
+        for (int i = 0; i < 4; i++) {
+            Path bg_line_path = new Path();
+            bg_line_path.moveTo(padding_left, imgHeight_base / 2f + dp2px(72, getContext()) * i);
+            bg_line_path.lineTo(padding_left + width, imgHeight_base / 2f + dp2px(72, getContext()) * i);
+            canvas.drawPath(bg_line_path, bg_line_paint);
+
+            Paint bg_textPaint = new Paint();
+            bg_textPaint.setAntiAlias(true);
+            bg_textPaint.setStyle(Paint.Style.FILL);
+            bg_textPaint.setStrokeWidth(12);
+            bg_textPaint.setTextSize(bg_textSize);
+            bg_textPaint.setTextAlign(Paint.Align.CENTER);
+            bg_textPaint.setColor(bg_text_color);
+            switch (i) {
+                case 0:
+                    canvas.drawText("设", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + bg_textSize, bg_textPaint);
+                    canvas.drawText("备", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + bg_textSize * 2.5f, bg_textPaint);
+                    canvas.drawText("连", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + bg_textSize * 4f, bg_textPaint);
+                    canvas.drawText("接", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + bg_textSize * 5.5f, bg_textPaint);
+                    break;
+                case 1:
+                    canvas.drawText("本", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + dp2px(72, getContext()) * i + bg_textSize, bg_textPaint);
+                    canvas.drawText("地", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + dp2px(72, getContext()) * i + bg_textSize * 2.5f, bg_textPaint);
+                    canvas.drawText("网", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + dp2px(72, getContext()) * i + bg_textSize * 4f, bg_textPaint);
+                    canvas.drawText("络", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + dp2px(72, getContext()) * i + bg_textSize * 5.5f, bg_textPaint);
+                    break;
+                case 2:
+                    canvas.drawText("运", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(14, getContext()) + dp2px(72, getContext()) * i + bg_textSize, bg_textPaint);
+                    canvas.drawText("营", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(14, getContext()) + dp2px(72, getContext()) * i + bg_textSize * 2.5f, bg_textPaint);
+                    canvas.drawText("商", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(14, getContext()) + dp2px(72, getContext()) * i + bg_textSize * 4f, bg_textPaint);
+                    break;
+                case 3:
+                    canvas.drawText("加", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + dp2px(72, getContext()) * i + bg_textSize, bg_textPaint);
+                    canvas.drawText("速", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + dp2px(72, getContext()) * i + bg_textSize * 2.5f, bg_textPaint);
+                    canvas.drawText("网", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + dp2px(72, getContext()) * i + bg_textSize * 4f, bg_textPaint);
+                    canvas.drawText("络", padding_left + bg_textSize / 2f, imgHeight_base / 2f + dp2px(7, getContext()) + dp2px(72, getContext()) * i + bg_textSize * 5.5f, bg_textPaint);
+                    break;
+            }
+        }
+
         //绘制设备
         for (int i = 0; i < netDevices.size(); i++) {
             NetDevice netDevice = netDevices.get(i);
@@ -295,7 +347,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
                 setMyLineColor(canvas, path, netDevice.getDelay(), false);
             }
             setMyText(canvas, netDevice.getDelay(), (int) (x + imgHeight_base / 2f - mX),
-                    imgHeight_base + dp2px(15, getContext()) );
+                    imgHeight_base + dp2px(15, getContext()));
         }
 
         //绘制节点
@@ -327,7 +379,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
                 setMyLineColor(canvas, path, netNode.getDelay(), false);
             }
 
-            setMyText(canvas, netNode.getDelay(), x + imgWidth_node / 2,
+            setMyText(canvas, netNode.getDelay(), x + imgWidth_node / 2 - mX,
                     local_service[1] + imgHeight_service - mY + dp2px(35, getContext()) + line_hight);
         }
 
@@ -479,7 +531,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         node.setTextColor(Color.parseColor("#3A3848"));
         linearLayout.addView(node);
         node_ll.addView(linearLayout);
-        netNodes.add(new NetNode(name, delay, node,linearLayout));
+        netNodes.add(new NetNode(name, delay, node, linearLayout));
         invalidate();
     }
 
