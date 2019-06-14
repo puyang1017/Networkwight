@@ -70,6 +70,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
     private int mX;
     private int mY;
     private int line_hight;
+    private int ms_hight;
     private int textSize = dp2px(7, getContext());
     private int bg_textSize = dp2px(10, getContext());
 
@@ -354,6 +355,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         index = netNodes.size() / 2;
         line_h = imgWidth_service / (netNodes.size() + 1);
         line_hight = 0;
+        ms_hight = 0;
         for (int i = 0; i < netNodes.size(); i++) {
             NetNode netNode = netNodes.get(i);
             int[] local_node = getLocation(netNode.getNode());
@@ -368,6 +370,11 @@ public class NetworkDelayMonitor extends RelativeLayout {
                     line_hight = line_hight + line_h;
                 }
             }
+            if (isOdd(i)) {
+                ms_hight = dp2px(70, getContext());
+            } else {
+                ms_hight = dp2px(55, getContext());
+            }
             Path path = new Path();
             path.moveTo(local_service[0] + imgWidth_service * (i + 1) / (netNodes.size() + 1f) - mX, local_service[1] + imgHeight_service - mY);
             path.lineTo(local_service[0] + imgWidth_service * (i + 1) / (netNodes.size() + 1f) - mX, local_service[1] + imgHeight_service - mY + dp2px(10, getContext()) + line_hight);
@@ -380,7 +387,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
             }
 
             setMyText(canvas, netNode.getDelay(), x + imgWidth_node / 2 - mX,
-                    local_service[1] + imgHeight_service - mY + dp2px(35, getContext()) + line_hight);
+                    local_service[1] + imgHeight_service - mY + ms_hight);
         }
 
 
@@ -560,7 +567,6 @@ public class NetworkDelayMonitor extends RelativeLayout {
 
     /**
      * 移除全部
-     *
      */
     public void removeAll() {
         netDevices.clear();
@@ -570,7 +576,6 @@ public class NetworkDelayMonitor extends RelativeLayout {
 
     /**
      * 移除全部设备
-     *
      */
     public void removeAllDevices() {
         netDevices.clear();
@@ -579,7 +584,6 @@ public class NetworkDelayMonitor extends RelativeLayout {
 
     /**
      * 移除全部节点
-     *
      */
     public void removeAllNodes() {
         netNodes.clear();
