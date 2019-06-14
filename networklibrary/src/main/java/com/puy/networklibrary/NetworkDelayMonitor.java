@@ -558,6 +558,33 @@ public class NetworkDelayMonitor extends RelativeLayout {
         return location;
     }
 
+    /**
+     * 移除全部
+     *
+     */
+    public void removeAll() {
+        netDevices.clear();
+        netNodes.clear();
+        invalidate();
+    }
+
+    /**
+     * 移除全部设备
+     *
+     */
+    public void removeAllDevices() {
+        netDevices.clear();
+        invalidate();
+    }
+
+    /**
+     * 移除全部节点
+     *
+     */
+    public void removeAllNodes() {
+        netNodes.clear();
+        invalidate();
+    }
 
     /**
      * 移除设备

@@ -64,6 +64,12 @@ network_delay_monitor.removeDevice("ps3");          //删除指定设备
 
 network_delay_monitor.removeNode("中");            //删除指定节点
 
+network_delay_monitor.removeAllDevices();            //删除所有设备
+
+network_delay_monitor.removeAllNodes();            //删除所有节点
+
+network_delay_monitor.removeAll();            //删除所有节点和设备
+
 ```
 
 
