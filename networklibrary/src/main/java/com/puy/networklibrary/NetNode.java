@@ -8,11 +8,11 @@ import android.widget.TextView;
  */
 public class NetNode {
     private String name;
-    private int delay;
+    private Double delay;
     private TextView node;
     private LinearLayout linearLayout;
 
-    public NetNode(String name, int delay, TextView node,LinearLayout linearLayout) {
+    public NetNode(String name, Double delay, TextView node,LinearLayout linearLayout) {
         this.name = name;
         this.delay = delay;
         this.node = node;
@@ -27,11 +27,11 @@ public class NetNode {
         this.name = name;
     }
 
-    public int getDelay() {
+    public Double getDelay() {
         return delay;
     }
 
-    public void setDelay(int delay) {
+    public void setDelay(Double delay) {
         this.delay = delay;
     }
 

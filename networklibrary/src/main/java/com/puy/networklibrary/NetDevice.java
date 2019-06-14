@@ -11,11 +11,11 @@ public class NetDevice {
 
     private String ip;
     private String name;
-    private int delay;
+    private Double delay;
     private LinearLayout linearLayout;
     private ImageView imageView;
 
-    public NetDevice(String ip, String name, int delay, LinearLayout linearLayout, ImageView imageView) {
+    public NetDevice(String ip, String name, Double delay, LinearLayout linearLayout, ImageView imageView) {
         this.ip = ip;
         this.name = name;
         this.delay = delay;
@@ -47,11 +47,11 @@ public class NetDevice {
         this.ip = ip;
     }
 
-    public int getDelay() {
+    public Double getDelay() {
         return delay;
     }
 
-    public void setDelay(int delay) {
+    public void setDelay(Double delay) {
         this.delay = delay;
     }
 

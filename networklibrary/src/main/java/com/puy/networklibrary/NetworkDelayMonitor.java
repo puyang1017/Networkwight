@@ -74,9 +74,9 @@ public class NetworkDelayMonitor extends RelativeLayout {
     private int bg_textSize = dp2px(10, getContext());
 
     //联机宝延迟
-    private int ljbDelay = -1;
+    private Double ljbDelay = -1d;
     //路由器延迟
-    private int routerDelay = -1;
+    private Double routerDelay = -1d;
 
     public NetworkDelayMonitor(Context context) {
         super(context);
@@ -411,7 +411,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         super.onDraw(canvas);
     }
 
-    private void setMyText(Canvas canvas, int delay, int x, int y) {
+    private void setMyText(Canvas canvas, Double delay, int x, int y) {
         Paint textPaint = new Paint();
         textPaint.setAntiAlias(true);
         textPaint.setStyle(Paint.Style.FILL);
@@ -434,12 +434,12 @@ public class NetworkDelayMonitor extends RelativeLayout {
         Paint bgRect = new Paint();
         bgRect.setStyle(Paint.Style.FILL);
         bgRect.setColor(Color.parseColor("#F9F9F9"));
-        float weight = textPaint.measureText(String.format("%dms", delay));
+        float weight = textPaint.measureText(String.format("%fms", delay));
         canvas.drawRect(x - weight / 2, y - textSize, x + weight / 2, y + textSize, bgRect);
         canvas.drawText(delay + "ms", x, y + textSize / 2, textPaint);
     }
 
-    public void setMyLineColor(Canvas canvas, Path path, int delay, boolean lost) {
+    public void setMyLineColor(Canvas canvas, Path path, Double delay, boolean lost) {
         if (lost) {
             canvas.drawPath(path, red_lost_paint);
         } else {
@@ -469,7 +469,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
      * @param name  设备名称
      * @param ip    设备ip
      */
-    public void addDevice(@DrawableRes int resId, final String name, final String ip, final int delay) {
+    public void addDevice(@DrawableRes int resId, final String name, final String ip, final Double delay) {
         LinearLayout linearLayout = new LinearLayout(getContext());
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -511,7 +511,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
      *
      * @param name 设备名称
      */
-    public void addNode(final String name, final int delay) {
+    public void addNode(final String name, final Double delay) {
         LinearLayout linearLayout = new LinearLayout(getContext());
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -535,7 +535,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         invalidate();
     }
 
-    public void setMyTextBackgroundColor(TextView textview, int delay) {
+    public void setMyTextBackgroundColor(TextView textview, Double delay) {
         if (delay == 0) {
             textview.setBackground(getResources().getDrawable(R.drawable.network_red));
         } else if (delay > 0 && delay < 100) {
@@ -622,7 +622,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
      * @param name
      * @param delay
      */
-    public void refreshDeviceAndNodeDelay(String name, int delay) {
+    public void refreshDeviceAndNodeDelay(String name, Double delay) {
         dismissAllPopup();
         for (NetDevice netDevice : netDevices) {
             if (netDevice.getName().equals(name)) {
@@ -643,7 +643,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
      *
      * @param delay
      */
-    public void refreshLjbDelay(int delay) {
+    public void refreshLjbDelay(Double delay) {
         dismissAllPopup();
         ljbDelay = delay;
         invalidate();
@@ -654,7 +654,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
      *
      * @param delay
      */
-    public void refreshRouterDelay(int delay) {
+    public void refreshRouterDelay(Double delay) {
         dismissAllPopup();
         routerDelay = delay;
         invalidate();
