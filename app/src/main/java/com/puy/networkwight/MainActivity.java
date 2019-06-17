@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         network_delay_monitor = findViewById(R.id.network_delay_monitor);
         network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps1", "192.168.1.1",2d);
-        network_delay_monitor.addNode("中",2000d);
+        network_delay_monitor.addNode("中",0d);
         network_delay_monitor.addNode("中",2200d);
         network_delay_monitor.addNode("中",2200d);
         network_delay_monitor.addNode("中",2200d);
@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps3", "192.168.1.3",0d);
                 network_delay_monitor.addNode("日",2d);
-                network_delay_monitor.refreshDeviceAndNodeDelay("中",200d);
-                network_delay_monitor.refreshDeviceAndNodeDelay("ps1",200d);
-                network_delay_monitor.refreshLjbDelay(1000d);
-                network_delay_monitor.refreshRouterDelay(200d);
+                network_delay_monitor.refreshDeviceAndNodeDelay("中",7d);
+                network_delay_monitor.refreshDeviceAndNodeDelay("ps1",4d);
+                network_delay_monitor.refreshLjbDelay(7d);
+                network_delay_monitor.refreshRouterDelay(30d);
             }
         });
         delete_button.setOnClickListener(new View.OnClickListener() {

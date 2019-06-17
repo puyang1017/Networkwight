@@ -79,6 +79,13 @@ public class NetworkDelayMonitor extends RelativeLayout {
     //路由器延迟
     private Double routerDelay = -1d;
 
+    enum Type {
+        DEVICE,
+        LOCAL,
+        OPERATOR,
+        NODE
+    }
+
     public NetworkDelayMonitor(Context context) {
         super(context);
     }
@@ -342,13 +349,9 @@ public class NetworkDelayMonitor extends RelativeLayout {
             path.lineTo(x + imgHeight_base / 2f - mX, imgHeight_base + dp2px(35, getContext()) + line_hight);
             path.lineTo(local_ljb[0] + imgHeight_base * (i + 1) / (netDevices.size() + 1f) - mX, imgHeight_base + dp2px(35, getContext()) + line_hight);
             path.lineTo(local_ljb[0] + imgHeight_base * (i + 1) / (netDevices.size() + 1f) - mX, local_ljb[1] - mY);
-            if (netDevice.getDelay() == 0) {
-                setMyLineColor(canvas, path, netDevice.getDelay(), true);
-            } else {
-                setMyLineColor(canvas, path, netDevice.getDelay(), false);
-            }
+            setMyLineColor(canvas, path, netDevice.getDelay(), Type.DEVICE);
             setMyText(canvas, netDevice.getDelay(), (int) (x + imgHeight_base / 2f - mX),
-                    imgHeight_base + dp2px(15, getContext()));
+                    imgHeight_base + dp2px(15, getContext()), Type.DEVICE);
         }
 
         //绘制节点
@@ -380,14 +383,9 @@ public class NetworkDelayMonitor extends RelativeLayout {
             path.lineTo(local_service[0] + imgWidth_service * (i + 1) / (netNodes.size() + 1f) - mX, local_service[1] + imgHeight_service - mY + dp2px(10, getContext()) + line_hight);
             path.lineTo(x + imgWidth_node / 2 - mX, local_service[1] + imgHeight_service - mY + dp2px(10, getContext()) + line_hight);
             path.lineTo(x + imgWidth_node / 2 - mX, y - mY);
-            if (netNode.getDelay() == 0) {
-                setMyLineColor(canvas, path, netNode.getDelay(), true);
-            } else {
-                setMyLineColor(canvas, path, netNode.getDelay(), false);
-            }
-
+            setMyLineColor(canvas, path, netNode.getDelay(), Type.NODE);
             setMyText(canvas, netNode.getDelay(), x + imgWidth_node / 2 - mX,
-                    local_service[1] + imgHeight_service - mY + ms_hight);
+                    local_service[1] + imgHeight_service - mY + ms_hight, Type.NODE);
         }
 
 
@@ -395,72 +393,106 @@ public class NetworkDelayMonitor extends RelativeLayout {
             Path path = new Path();
             path.moveTo(local_ljb[0] + imgWidth_base / 2 - mX, local_ljb[1] + imgWidth_base - mY);
             path.lineTo(local_router[0] + imgWidth_base / 2 - mX, local_router[1] + imgWidth_base - mY);
-
-            if (ljbDelay == 0) {
-                setMyLineColor(canvas, path, ljbDelay, true);
-            } else {
-                setMyLineColor(canvas, path, ljbDelay, false);
-            }
-            setMyText(canvas, ljbDelay, local_ljb[0] + imgWidth_base / 2 - mX, local_ljb[1] + imgWidth_base - mY + (local_router[1] - local_ljb[1] - imgWidth_base) / 2);
+            setMyLineColor(canvas, path, ljbDelay, Type.LOCAL);
+            setMyText(canvas, ljbDelay, local_ljb[0] + imgWidth_base / 2 - mX, local_ljb[1] + imgWidth_base - mY + (local_router[1] - local_ljb[1] - imgWidth_base) / 2, Type.LOCAL);
         }
 
         if (routerDelay != -1) {
             Path path = new Path();
             path.moveTo(local_router[0] + imgWidth_base / 2 - mX, local_router[1] + imgWidth_base - mY);
             path.lineTo(local_service[0] + imgWidth_service / 2 - mX, local_service[1] + imgHeight_service - mY);
-            if (routerDelay == 0) {
-                setMyLineColor(canvas, path, routerDelay, true);
-            } else {
-                setMyLineColor(canvas, path, routerDelay, false);
-            }
-            setMyText(canvas, routerDelay, local_router[0] + imgWidth_base / 2 - mX, local_router[1] + imgWidth_base - mY + (local_service[1] - local_router[1] - imgWidth_base) / 2);
+            setMyLineColor(canvas, path, routerDelay, Type.OPERATOR);
+            setMyText(canvas, routerDelay, local_router[0] + imgWidth_base / 2 - mX, local_router[1] + imgWidth_base - mY + (local_service[1] - local_router[1] - imgWidth_base) / 2, Type.OPERATOR);
         }
         super.onDraw(canvas);
     }
 
-    private void setMyText(Canvas canvas, Double delay, int x, int y) {
+    private void setMyText(Canvas canvas, Double delay, int x, int y, Type type) {
         Paint textPaint = new Paint();
         textPaint.setAntiAlias(true);
         textPaint.setStyle(Paint.Style.FILL);
         textPaint.setStrokeWidth(12);
         textPaint.setTextSize(textSize);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        if (delay == 0) {
-            textPaint.setColor(Color.parseColor("#F14466"));
-        } else if (delay > 0 && delay < 100) {
-            textPaint.setColor(Color.parseColor("#3A3848"));
-        } else if (delay >= 100 && delay < 150) {
-            textPaint.setColor(Color.parseColor("#009FE8"));
-        } else if (delay >= 150 && delay < 200) {
-            textPaint.setColor(Color.parseColor("#EDCE2A"));
-        } else if (delay >= 200 && delay < 300) {
-            textPaint.setColor(Color.parseColor("#F18E2D"));
-        } else if (delay >= 300) {
-            textPaint.setColor(Color.parseColor("#F14466"));
+        switch (type) {
+            case DEVICE:
+            case LOCAL:
+                if (delay == 0) {
+                    textPaint.setColor(Color.parseColor("#F14466"));
+                } else if (delay > 0 && delay <= 5) {
+                    textPaint.setColor(Color.parseColor("#00B374"));
+                } else if (delay > 5 && delay <= 10) {
+                    textPaint.setColor(Color.parseColor("#EDCE2A"));
+                } else if (delay > 10 && delay <= 20) {
+                    textPaint.setColor(Color.parseColor("#F18E2D"));
+                } else if (delay > 20) {
+                    textPaint.setColor(Color.parseColor("#F14466"));
+                }
+                break;
+            case OPERATOR:
+                if (delay == 0) {
+                    textPaint.setColor(Color.parseColor("#F14466"));
+                } else if (delay > 0 && delay <= 10) {
+                    textPaint.setColor(Color.parseColor("#00B374"));
+                } else if (delay > 10 && delay <= 20) {
+                    textPaint.setColor(Color.parseColor("#EDCE2A"));
+                } else if (delay > 20 && delay <= 30) {
+                    textPaint.setColor(Color.parseColor("#F18E2D"));
+                } else if (delay > 30) {
+                    textPaint.setColor(Color.parseColor("#F14466"));
+                }
+                break;
+            case NODE:
+                textPaint.setColor(Color.parseColor("#00B374"));
+                break;
         }
         Paint bgRect = new Paint();
         bgRect.setStyle(Paint.Style.FILL);
         bgRect.setColor(Color.parseColor("#F9F9F9"));
-        float weight = textPaint.measureText(String.format("%fms", delay));
+
+        String ms = null;
+        if (delay == 0) {
+            ms = "丢包";
+        } else {
+            ms = String.format("%.1fms", delay);
+        }
+        float weight = textPaint.measureText(ms);
         canvas.drawRect(x - weight / 2, y - textSize, x + weight / 2, y + textSize, bgRect);
-        canvas.drawText(delay + "ms", x, y + textSize / 2, textPaint);
+        canvas.drawText(ms, x, y + textSize / 2, textPaint);
     }
 
-    public void setMyLineColor(Canvas canvas, Path path, Double delay, boolean lost) {
-        if (lost) {
-            canvas.drawPath(path, red_lost_paint);
-        } else {
-            if (delay > 0 && delay < 100) {
+    public void setMyLineColor(Canvas canvas, Path path, Double delay, Type type) {
+        switch (type) {
+            case DEVICE:
+            case LOCAL:
+                if (delay == 0) {
+                    canvas.drawPath(path, red_lost_paint);
+                } else if (delay > 0 && delay <= 5) {
+                    canvas.drawPath(path, green_paint);
+                } else if (delay > 5 && delay <= 10) {
+                    canvas.drawPath(path, yellow_paint);
+                } else if (delay > 10 && delay <= 20) {
+                    canvas.drawPath(path, orange_paint);
+                } else if (delay > 20) {
+                    canvas.drawPath(path, red_paint);
+                }
+                break;
+            case OPERATOR:
+                if (delay == 0) {
+                    canvas.drawPath(path, red_lost_paint);
+                } else if (delay > 0 && delay <= 10) {
+                    canvas.drawPath(path, green_paint);
+                } else if (delay > 10 && delay <= 20) {
+                    canvas.drawPath(path, yellow_paint);
+                } else if (delay > 20 && delay <= 30) {
+                    canvas.drawPath(path, orange_paint);
+                } else if (delay > 30) {
+                    canvas.drawPath(path, red_paint);
+                }
+                break;
+            case NODE:
                 canvas.drawPath(path, green_paint);
-            } else if (delay >= 100 && delay < 150) {
-                canvas.drawPath(path, blue_paint);
-            } else if (delay >= 150 && delay < 200) {
-                canvas.drawPath(path, yellow_paint);
-            } else if (delay >= 200 && delay < 300) {
-                canvas.drawPath(path, orange_paint);
-            } else if (delay >= 300) {
-                canvas.drawPath(path, red_paint);
-            }
+                break;
         }
     }
 
@@ -527,11 +559,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         linearLayout.setGravity(Gravity.CENTER);
         final TextView node = new TextView(getContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imgWidth_node, imgHeight_node);
-        if (delay > 0) {
-            setMyTextBackgroundColor(node, delay);
-        } else {
-            setMyTextBackgroundColor(node, delay);
-        }
+        setMyTextBackgroundColor(node, delay);
         node.setLayoutParams(params);
         node.setText(name);
         node.setGravity(Gravity.CENTER);
@@ -543,19 +571,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
     }
 
     public void setMyTextBackgroundColor(TextView textview, Double delay) {
-        if (delay == 0) {
-            textview.setBackground(getResources().getDrawable(R.drawable.network_red));
-        } else if (delay > 0 && delay < 100) {
-            textview.setBackground(getResources().getDrawable(R.drawable.network_green));
-        } else if (delay >= 100 && delay < 150) {
-            textview.setBackground(getResources().getDrawable(R.drawable.network_blue));
-        } else if (delay >= 150 && delay < 200) {
-            textview.setBackground(getResources().getDrawable(R.drawable.network_yellow));
-        } else if (delay >= 200 && delay < 300) {
-            textview.setBackground(getResources().getDrawable(R.drawable.network_orange));
-        } else if (delay >= 300) {
-            textview.setBackground(getResources().getDrawable(R.drawable.network_red));
-        }
+        textview.setBackground(getResources().getDrawable(R.drawable.network_green));
     }
 
 
