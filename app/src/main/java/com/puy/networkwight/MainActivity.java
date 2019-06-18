@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                network_delay_monitor.removeDevice("ps3");
-                network_delay_monitor.removeNode("中");
+                network_delay_monitor.removeAllDevices();
+                network_delay_monitor.removeAllNodes();
             }
         });
     }

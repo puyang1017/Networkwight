@@ -595,6 +595,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
      */
     public void removeAllDevices() {
         netDevices.clear();
+        devices_ll.removeAllViews();
         invalidate();
     }
 
@@ -603,6 +604,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
      */
     public void removeAllNodes() {
         netNodes.clear();
+        node_ll.removeAllViews();
         invalidate();
     }
 
