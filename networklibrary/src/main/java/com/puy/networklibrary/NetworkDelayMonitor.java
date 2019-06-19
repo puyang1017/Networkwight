@@ -284,14 +284,23 @@ public class NetworkDelayMonitor extends RelativeLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.save();
         mX = getLeft();
+        int screen_width = 0;
+        int screen_high = 0;
         int[] mlocal_ljb = getLocation(image_ljb);
         int[] mlocal_router = getLocation(image_router);
         int[] mlocal_service = getLocation(image_node);
-        if (mlocal_ljb[0] < 0 || mlocal_router[0] < 0 || mlocal_service[0] < 0||mlocal_ljb[1] < 0 || mlocal_router[1] < 0 || mlocal_service[1] < 0) {
-            canvas.restore();
-            return;
+        if (mlocal_ljb[0] < 0) {
+            screen_width = local_ljb[0] - mlocal_ljb[0];
+            mlocal_ljb[0] = mlocal_ljb[0] + screen_width;
+            mlocal_router[0] = mlocal_router[0] + screen_width;
+            mlocal_service[0] = mlocal_service[0] + screen_width;
+        }
+        if (mlocal_ljb[1] < 0) {
+            screen_high = local_ljb[1] - mlocal_ljb[1];
+            mlocal_ljb[1] = mlocal_ljb[1] + screen_high;
+            mlocal_router[1] = mlocal_router[1] + screen_high;
+            mlocal_service[1] = mlocal_service[1] + screen_high;
         }
         local_ljb = mlocal_ljb;
         local_router = mlocal_router;
@@ -349,8 +358,8 @@ public class NetworkDelayMonitor extends RelativeLayout {
         for (int i = 0; i < netDevices.size(); i++) {
             NetDevice netDevice = netDevices.get(i);
             int[] local_device = getLocation(netDevice.getImageView());
-            int x = local_device[0];
-            int y = local_device[1];
+            int x = local_device[0] + screen_width;
+            int y = local_device[1] + screen_high;
             mY = y;
             if (i < index) {
                 line_hight = line_hight - line_h;
@@ -379,8 +388,8 @@ public class NetworkDelayMonitor extends RelativeLayout {
         for (int i = 0; i < netNodes.size(); i++) {
             NetNode netNode = netNodes.get(i);
             int[] local_node = getLocation(netNode.getNode());
-            int x = local_node[0];
-            int y = local_node[1];
+            int x = local_node[0] + screen_width;
+            int y = local_node[1] + screen_high;
             if (i < index) {
                 line_hight = line_hight + line_h;
             } else if (i > index) {
