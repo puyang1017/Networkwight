@@ -103,7 +103,6 @@ public class NetworkDelayMonitor extends RelativeLayout {
     }
 
     private void init(Context context) {
-        mX = getLeft();
         imgHeight_base = dp2px(32, context);
         imgWidth_base = imgHeight_base;
         imgHeight_service = imgHeight_base;
@@ -280,9 +279,15 @@ public class NetworkDelayMonitor extends RelativeLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        mX = getLeft();
         int[] local_ljb = getLocation(image_ljb);
         int[] local_router = getLocation(image_router);
         int[] local_service = getLocation(image_node);
+        System.out.println("NetworkDelayMonitor mX:"+mX);
+        System.out.println("NetworkDelayMonitor local_ljb "+local_ljb[0]+" "+local_ljb[1]);
+        System.out.println("NetworkDelayMonitor local_router "+local_router[0]+" "+local_router[1]);
+        System.out.println("NetworkDelayMonitor local_service "+local_service[0]+" "+local_service[1]);
         int index = netDevices.size() / 2;
         int line_h = imgHeight_base / (netDevices.size() + 1);
         line_hight = 0;
@@ -404,7 +409,6 @@ public class NetworkDelayMonitor extends RelativeLayout {
             setMyLineColor(canvas, path, routerDelay, Type.OPERATOR);
             setMyText(canvas, routerDelay, local_router[0] + imgWidth_base / 2 - mX, local_router[1] + imgWidth_base - mY + (local_service[1] - local_router[1] - imgWidth_base) / 2, Type.OPERATOR);
         }
-        super.onDraw(canvas);
     }
 
     private void setMyText(Canvas canvas, Double delay, int x, int y, Type type) {
