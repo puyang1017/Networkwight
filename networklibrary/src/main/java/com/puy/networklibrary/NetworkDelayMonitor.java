@@ -291,6 +291,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         int[] mlocal_service = getLocation(image_node);
         if (mlocal_ljb[0] < 0 || mlocal_router[0] < 0 || mlocal_service[0] < 0||mlocal_ljb[1] < 0 || mlocal_router[1] < 0 || mlocal_service[1] < 0) {
             canvas.restore();
+            return;
         }
         local_ljb = mlocal_ljb;
         local_router = mlocal_router;
