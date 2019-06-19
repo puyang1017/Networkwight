@@ -103,6 +103,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
     }
 
     private void init(Context context) {
+        mX = getLeft();
         imgHeight_base = dp2px(32, context);
         imgWidth_base = imgHeight_base;
         imgHeight_service = imgHeight_base;
@@ -279,7 +280,6 @@ public class NetworkDelayMonitor extends RelativeLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mX = getLeft();
         int[] local_ljb = getLocation(image_ljb);
         int[] local_router = getLocation(image_router);
         int[] local_service = getLocation(image_node);
