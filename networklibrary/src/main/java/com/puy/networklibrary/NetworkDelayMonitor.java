@@ -79,6 +79,10 @@ public class NetworkDelayMonitor extends RelativeLayout {
     //路由器延迟
     private Double routerDelay = -1d;
 
+    int[] local_ljb;
+    int[] local_router;
+    int[] local_service;
+
     enum Type {
         DEVICE,
         LOCAL,
@@ -281,13 +285,22 @@ public class NetworkDelayMonitor extends RelativeLayout {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mX = getLeft();
-        int[] local_ljb = getLocation(image_ljb);
-        int[] local_router = getLocation(image_router);
-        int[] local_service = getLocation(image_node);
-        System.out.println("NetworkDelayMonitor mX:"+mX);
-        System.out.println("NetworkDelayMonitor local_ljb "+local_ljb[0]+" "+local_ljb[1]);
-        System.out.println("NetworkDelayMonitor local_router "+local_router[0]+" "+local_router[1]);
-        System.out.println("NetworkDelayMonitor local_service "+local_service[0]+" "+local_service[1]);
+        int[] mlocal_ljb = getLocation(image_ljb);
+        int[] mlocal_router = getLocation(image_router);
+        int[] mlocal_service = getLocation(image_node);
+        if (mlocal_ljb[0] < 0 || mlocal_router[0] < 0 || mlocal_service[0] < 0) {
+            return;
+        }
+        if (mlocal_ljb[1] < 0 || mlocal_router[1] < 0 || mlocal_service[1] < 0) {
+            return;
+        }
+        local_ljb = mlocal_ljb;
+        local_router = mlocal_router;
+        local_service = mlocal_service;
+        System.out.println("NetworkDelayMonitor mX:" + mX);
+        System.out.println("NetworkDelayMonitor local_ljb " + local_ljb[0] + " " + local_ljb[1]);
+        System.out.println("NetworkDelayMonitor local_router " + local_router[0] + " " + local_router[1]);
+        System.out.println("NetworkDelayMonitor local_service " + local_service[0] + " " + local_service[1]);
         int index = netDevices.size() / 2;
         int line_h = imgHeight_base / (netDevices.size() + 1);
         line_hight = 0;
