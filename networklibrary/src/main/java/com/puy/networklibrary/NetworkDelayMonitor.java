@@ -288,15 +288,13 @@ public class NetworkDelayMonitor extends RelativeLayout {
         int[] mlocal_ljb = getLocation(image_ljb);
         int[] mlocal_router = getLocation(image_router);
         int[] mlocal_service = getLocation(image_node);
-        if (mlocal_ljb[0] < 0 || mlocal_router[0] < 0 || mlocal_service[0] < 0) {
-            return;
+        if (mlocal_ljb[0] < 0 || mlocal_router[0] < 0 || mlocal_service[0] < 0||mlocal_ljb[1] < 0 || mlocal_router[1] < 0 || mlocal_service[1] < 0) {
+        }else {
+            local_ljb = mlocal_ljb;
+            local_router = mlocal_router;
+            local_service = mlocal_service;
         }
-        if (mlocal_ljb[1] < 0 || mlocal_router[1] < 0 || mlocal_service[1] < 0) {
-            return;
-        }
-        local_ljb = mlocal_ljb;
-        local_router = mlocal_router;
-        local_service = mlocal_service;
+
         System.out.println("NetworkDelayMonitor mX:" + mX);
         System.out.println("NetworkDelayMonitor local_ljb " + local_ljb[0] + " " + local_ljb[1]);
         System.out.println("NetworkDelayMonitor local_router " + local_router[0] + " " + local_router[1]);
