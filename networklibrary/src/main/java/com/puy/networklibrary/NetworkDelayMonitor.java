@@ -177,7 +177,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         center_ll.setId(R.id.NetworkDelayMonitor_center_ll);
         center_ll.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+                dp2px(176f, getContext())));
 
         node_ll.setOrientation(LinearLayout.HORIZONTAL);
         node_ll.setLayoutParams(new LinearLayout.LayoutParams(
@@ -378,6 +378,9 @@ public class NetworkDelayMonitor extends RelativeLayout {
             setMyLineColor(canvas, path, netDevice.getDelay(), Type.DEVICE);
             setMyText(canvas, netDevice.getDelay(), (int) (x + imgHeight_base / 2f - mX),
                     imgHeight_base + dp2px(15, getContext()), Type.DEVICE);
+        }
+        if(netDevices.size() == 0){
+            mY = screen_high + dp2px(84.5f, getContext());
         }
 
         //绘制节点
