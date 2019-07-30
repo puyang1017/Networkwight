@@ -171,7 +171,7 @@ public class NetworkDelayMonitor extends RelativeLayout {
         devices_ll.setId(R.id.NetworkDelayMonitor_devices_ll);
         devices_ll.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+                imgWidth_base));
 
         center_ll.setOrientation(LinearLayout.VERTICAL);
         center_ll.setId(R.id.NetworkDelayMonitor_center_ll);
