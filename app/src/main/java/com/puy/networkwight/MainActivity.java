@@ -20,24 +20,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         network_delay_monitor = findViewById(R.id.network_delay_monitor);
-        network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps1", "192.168.1.1",2d);
-        network_delay_monitor.addNode("中",0d);
-        network_delay_monitor.addNode("中",2200d);
-        network_delay_monitor.addNode("中",2200d);
-        network_delay_monitor.addNode("中",2200d);
-        network_delay_monitor.addNode("中",2100d);
-        network_delay_monitor.addNode("中",112d);
-        network_delay_monitor.addNode("中",222d);
-        network_delay_monitor.addNode("中",222d);
-        network_delay_monitor.refreshLjbDelay(3d);
-        network_delay_monitor.refreshRouterDelay(4d);
+//        network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps1", "192.168.1.1",2d);
+//        network_delay_monitor.addNode("中",0d);
+//        network_delay_monitor.addNode("中",2200d);
+//        network_delay_monitor.addNode("中",2200d);
+//        network_delay_monitor.addNode("中",2200d);
+//        network_delay_monitor.addNode("中",2100d);
+//        network_delay_monitor.addNode("中",112d);
+//        network_delay_monitor.addNode("中",222d);
+//        network_delay_monitor.addNode("中",222d);
+//        network_delay_monitor.refreshLjbDelay(3d);
+//        network_delay_monitor.refreshRouterDelay(4d);
         add_button = findViewById(R.id.add_button);
         delete_button = findViewById(R.id.delete_button);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps3", "192.168.1.3",0d);
-                network_delay_monitor.addNode("日",2d);
+//                network_delay_monitor.addDevice(R.drawable.icon_ps4_press, "ps3", "192.168.1.3",0d);
+                network_delay_monitor.addNode("中",0d);
+                network_delay_monitor.addNode("中",2200d);
+                network_delay_monitor.addNode("中",2200d);
+                network_delay_monitor.addNode("中",2200d);
+                network_delay_monitor.addNode("中",2100d);
+                network_delay_monitor.addNode("中",112d);
+                network_delay_monitor.addNode("中",222d);
+                network_delay_monitor.addNode("中",222d);
                 network_delay_monitor.refreshDeviceAndNodeDelay("中",7d);
                 network_delay_monitor.refreshDeviceAndNodeDelay("ps1",4d);
                 network_delay_monitor.refreshLjbDelay(7d);

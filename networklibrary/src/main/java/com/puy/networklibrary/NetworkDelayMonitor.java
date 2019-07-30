@@ -305,10 +305,10 @@ public class NetworkDelayMonitor extends RelativeLayout {
         local_ljb = mlocal_ljb;
         local_router = mlocal_router;
         local_service = mlocal_service;
-        System.out.println("NetworkDelayMonitor mX:" + mX);
-        System.out.println("NetworkDelayMonitor local_ljb " + local_ljb[0] + " " + local_ljb[1]);
-        System.out.println("NetworkDelayMonitor local_router " + local_router[0] + " " + local_router[1]);
-        System.out.println("NetworkDelayMonitor local_service " + local_service[0] + " " + local_service[1]);
+//        System.out.println("NetworkDelayMonitor mX:" + mX);
+//        System.out.println("NetworkDelayMonitor local_ljb " + local_ljb[0] + " " + local_ljb[1]);
+//        System.out.println("NetworkDelayMonitor local_router " + local_router[0] + " " + local_router[1]);
+//        System.out.println("NetworkDelayMonitor local_service " + local_service[0] + " " + local_service[1]);
         int index = netDevices.size() / 2;
         int line_h = imgHeight_base / (netDevices.size() + 1);
         line_hight = 0;
@@ -380,7 +380,10 @@ public class NetworkDelayMonitor extends RelativeLayout {
                     imgHeight_base + dp2px(15, getContext()), Type.DEVICE);
         }
         if(netDevices.size() == 0){
-            mY = screen_high + dp2px(84.5f, getContext());
+            int[] mlocal_devices_ll = getLocation(devices_ll);
+            if(mlocal_devices_ll.length ==2){
+                mY = screen_high + mlocal_devices_ll[1] ;
+            }
         }
 
         //绘制节点
